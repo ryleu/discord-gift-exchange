@@ -104,14 +104,20 @@ def main():
                 if people_dict[person] == person:
                     randomized = False
                     break
+        
+        users = {}
+
+        for person in people:
+            time.sleep(0.03)
+            users[person] = await interactions.get(bot, interactions.User, object_id = person)
 
         for person in people:
             time.sleep(1)
-            user = await interactions.get(bot, interactions.User, object_id = person)
+            user = users[person]
             try:
-                await user.send(f'You were assigned <@{people_dict[person]}> from the gift exchange in <#{ctx.channel.id}>.')
+                await user.send(f'You were assigned <@{people_dict[person]}> (`{users[people_dict[person]].username}#{users[people_dict[person]].discriminator}`) from the gift exchange in <#{ctx.channel.id}>.')
             except interactions.api.error.LibraryException:
-                await ctx.channel.send(f'Failed to message <@{person}> (`{person}`). Please check your privacy settings in this server to ensure that "Direct Messages" is enabled.')
+                await ctx.channel.send(f'Failed to message <@{person}>. Please check your privacy settings in this server to ensure that "Direct Messages" is enabled.')
 
         await ctx.send(f'Finished assigning users. Took {attempts} attempt(s).')
 
