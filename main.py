@@ -112,14 +112,7 @@ def main():
                 await user.send(f'You were assigned <@{people_dict[person]}> from the gift exchange in <#{ctx.channel.id}>.')
             except interactions.api.error.LibraryException:
                 await ctx.channel.send(f'Failed to message <@{person}>. Please check your privacy settings in this server to ensure that "Direct Messages" is enabled.')
-        
-        await ctx.edit(
-            components = interactions.spread_to_rows(
-                interactions.Button(style = 3, custom_id = 'join_exchange', label = 'Join'),
-                interactions.Button(style = 4, custom_id = 'leave_exchange', label = 'Leave'),
-                interactions.Button(style = 1, custom_id = 'randomize_exchange', label = 'Randomize')
-            )
-        )
+
         await ctx.send(f'Finished assigning users. Took {attempts} attempt(s).')
 
     bot.start()
